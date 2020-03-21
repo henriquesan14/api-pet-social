@@ -58,7 +58,9 @@ class PetController {
                 },
             ]
         });
-
+        if(!pet){
+            return res.status(404).json({error: `Pet de id ${req.params.id} não encontrado`});
+        }
         return res.json(pet);
     }
 
