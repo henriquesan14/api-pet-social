@@ -5,8 +5,11 @@ import AuthController from './app/controllers/AuthController';
 import AmizadeController from './app/controllers/AmizadeController';
 import SolicitacaoAmizadeController from './app/controllers/SolicitacaoAmizadeController';
 import TimelineController from './app/controllers/TimelineController';
+import ComentarioController from './app/controllers/ComentarioController';
+import LikeController from './app/controllers/LikeController';
 
 import authMiddleware from './app/middlewares/auth';
+
 
 const routes = new Router();
 
@@ -22,6 +25,10 @@ routes.put('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.upd
 routes.delete('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.remove);
 routes.get('/timeline', authMiddleware, TimelineController.index);
 routes.post('/timeline', authMiddleware, TimelineController.store);
+routes.post('/comentarios', authMiddleware, ComentarioController.store);
+routes.delete('/comentarios/:id', authMiddleware, ComentarioController.remove);
+routes.post('/likes', authMiddleware, LikeController.store);
+routes.delete('/likes/:id', authMiddleware, LikeController.remove);
 routes.post('/login', AuthController.store)
 
 export default routes;

@@ -60,7 +60,7 @@ class TimelineController {
             urlImagem: req.body.urlImagem
         });
 
-        return res.json({
+        return res.status(201).json({
             id,
             legenda,
             urlImagem,

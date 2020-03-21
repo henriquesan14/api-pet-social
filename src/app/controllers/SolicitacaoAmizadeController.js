@@ -43,7 +43,7 @@ class SolicitacaoAmizadeController {
             pet2_id: req.body.pet2_id
         };
         const { pet_id, pet2_id, aceite } = await Amizade.create(amizade);
-        return res.json({
+        return res.status(201).json({
             pet_id,
             pet2_id,
             aceite

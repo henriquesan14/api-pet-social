@@ -84,7 +84,7 @@ class PetController {
             return res.status(400).json({error: 'Já existe um pet com este e-mail'});
         }
         const {id, firstName, email, raca, tipo} = await Pet.create(req.body);
-        return res.json({
+        return res.status(201).json({
             id,
             firstName,
             email,
