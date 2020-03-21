@@ -15,8 +15,8 @@ class Post extends Model {
 
     static associate(models){
         this.belongsTo(models.Pet, {foreignKey: 'pet_id', as: 'pet'});
-        this.hasMany(models.Comentario, {foreignKey: 'id', as: 'comentarios', onDelete: 'CASCADE'});
-        this.hasMany(models.Like, {foreignKey: 'id', as: 'likes', onDelete: 'CASCADE'});
+        this.hasMany(models.Comentario, {foreignKey: 'post_id', as: 'comentarios', onDelete: 'CASCADE'});
+        this.hasMany(models.Like, {foreignKey: 'post_id', as: 'likes', onDelete: 'CASCADE'});
     }
 }
 
