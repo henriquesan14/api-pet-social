@@ -7,7 +7,8 @@ import authMiddleware from './app/middlewares/auth'
 
 const routes = new Router();
 
-routes.post('/pets', authMiddleware, PetController.store);
+routes.post('/pets', PetController.store);
+routes.put('/pets', authMiddleware, PetController.update);
 routes.post('/login', AuthController.store)
 
 export default routes;
