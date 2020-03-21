@@ -25,6 +25,7 @@ routes.put('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.upd
 routes.delete('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.remove);
 routes.get('/timeline', authMiddleware, TimelineController.index);
 routes.post('/timeline', authMiddleware, TimelineController.store);
+routes.delete('/timeline/:id', authMiddleware, TimelineController.remove);
 routes.post('/comentarios', authMiddleware, ComentarioController.store);
 routes.delete('/comentarios/:id', authMiddleware, ComentarioController.remove);
 routes.post('/likes', authMiddleware, LikeController.store);

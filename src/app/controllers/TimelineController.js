@@ -68,6 +68,18 @@ class TimelineController {
             created_at
         });
     }
+
+    async remove(req, res){
+        const post = await Post.findByPk(req.params.id);
+        if(!post){
+            return res.status(404).json({error: `Post de id ${req.params.id} não encontrado`});
+        }
+        if(req.userId != post.pet_id){
+            return res.status(400).json({error: 'Post só pode ser removido pelo dono'});
+        }
+        await post.destroy();
+        return res.status(204).json();
+    }
 }
 
 export default new TimelineController();

@@ -9,7 +9,7 @@ module.exports = {
             type: Sequelize.INTEGER,
             references: {model: 'conversas', key: 'id'},
             onUpdate: 'CASCADE',
-            onDelete: 'SET NULL',
+            onDelete: 'CASCADE',
             allowNull: false
         }
     );
