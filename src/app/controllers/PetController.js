@@ -1,7 +1,68 @@
 import Pet from '../models/Pet';
+import Post from '../models/Post';
+import Comentario from '../models/Comentario';
+import Like from '../models/Like';
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 class PetController {
+    async index(req, res){
+        const pets = await Pet.findAll({
+            where: {
+                id: {
+                    [Op.not]: req.userId
+                }
+            },
+            attributes: ['id', 'firstName', 'lastName', 'avatar']
+        });
+        return res.json(pets);
+    }
+
+    async getById(req, res){
+        const pet = await Pet.findByPk(req.params.id, {
+            attributes: [
+                'id', 'firstName', 'email', 'lastName', 'avatar',
+                'tipo','raca', 'dataNascimento', 'cidade', 'estado', 'telefone'
+            ],
+            include: [
+                {
+                    model: Post,
+                    as: 'posts',
+                    attributes: ['id', 'legenda', 'urlImagem', 'created_at'],
+                    include: [
+                        {
+                            model: Comentario,
+                            as: 'comentarios',
+                            attributes: ['id', 'mensagem', 'created_at'],
+                            include: [
+                                {
+                                    model: Pet,
+                                    as: 'pet',
+                                    attributes: ['id', 'firstName', 'avatar']
+                                }
+                            ]
+                        },
+                        {
+                            model: Like,
+                            as: 'likes',
+                            attributes: ['id'],
+                            include: [
+                                {
+                                    model: Pet,
+                                    as: 'pet',
+                                    attributes: ['id', 'firstName']
+                                }
+                            ]
+                        }
+                    ]
+                },
+            ]
+        });
+
+        return res.json(pet);
+    }
+
+
     async store(req, res){
         const schema = Yup.object().shape({
             firstName: Yup.string().required(),

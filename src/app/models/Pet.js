@@ -32,6 +32,10 @@ class Pet extends Model {
         return this;
     }
 
+    static associate(models){
+        this.hasMany(models.Post, {foreignKey: 'id', as: 'posts'});
+    }
+
     checkPassword(password){
         return bcrypt.compare(password,this.password_hash);
     }
