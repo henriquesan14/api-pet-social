@@ -20,6 +20,8 @@ class Pet extends Model {
         {
             sequelize
         });
+
+        return this;
     }
 }
 

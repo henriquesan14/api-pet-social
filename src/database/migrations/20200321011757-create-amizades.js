@@ -11,7 +11,8 @@ module.exports = {
         },
         aceite: {
             type: Sequelize.BOOLEAN,
-            allowNull: false
+            allowNull: false,
+            defaultValue: false
         },
         created_at: {
             type: Sequelize.DATE,

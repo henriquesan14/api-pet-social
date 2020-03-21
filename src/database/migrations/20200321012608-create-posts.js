@@ -13,7 +13,7 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: false
         },
-        urlImagem: {
+        url_imagem: {
             type: Sequelize.STRING,
             allowNull: false
         },

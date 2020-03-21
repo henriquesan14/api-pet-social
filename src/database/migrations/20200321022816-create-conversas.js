@@ -9,7 +9,7 @@ module.exports = {
             autoIncrement: true,
             primaryKey: true
         },
-        lastMessage: {
+        last_message: {
             type: Sequelize.STRING,
             allowNull: true,
         },
