@@ -38,7 +38,7 @@ class PetController {
                                 {
                                     model: Pet,
                                     as: 'pet',
-                                    attributes: ['id', 'firstName', 'avatar']
+                                    attributes: ['id', 'firstName', 'lastName', 'avatar']
                                 }
                             ]
                         },
@@ -50,7 +50,7 @@ class PetController {
                                 {
                                     model: Pet,
                                     as: 'pet',
-                                    attributes: ['id', 'firstName']
+                                    attributes: ['id', 'firstName', 'lastName',]
                                 }
                             ]
                         }

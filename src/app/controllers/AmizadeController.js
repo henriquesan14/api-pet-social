@@ -9,6 +9,7 @@ class AmizadeController {
                 [Op.or]: [{pet_id: req.userId}, {pet2_id: req.userId}],
                 aceite: true
             },
+            order: [['created_at', 'DESC']],
             include: [
                 {
                     model: Pet,

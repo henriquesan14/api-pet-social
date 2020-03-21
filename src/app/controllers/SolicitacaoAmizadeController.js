@@ -9,6 +9,7 @@ class SolicitacaoAmizadeController {
                 pet2_id: req.userId,
                 aceite: false
             },
+            order: [['created_at', 'DESC']],
             include: [
                 {
                     model: Pet,
@@ -61,6 +62,25 @@ class SolicitacaoAmizadeController {
         amizade.update({
             aceite: true
         })
+        return res.status(204).json();
+    }
+
+    async remove(req, res){
+        const solicitacao = await Amizade.findOne(
+            {
+                where: {
+                    id: req.params.id,
+                    aceite: false
+                }
+            }
+        );
+        if(!solicitacao){
+            return res.status(404).json({error: `Solicitação de id ${req.params.id} não encontrada`});
+        }
+        if(req.userId != solicitacao.pet2_id){
+            return res.status(400).json({error: 'Você não pode recusar solicitação que não pertencem a você'});
+        }
+        await solicitacao.destroy();
         return res.status(204).json();
     }
 
