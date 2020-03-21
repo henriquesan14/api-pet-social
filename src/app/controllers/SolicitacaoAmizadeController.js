@@ -1,13 +1,13 @@
 import Amizade from '../models/Amizade';
 import Pet from '../models/Pet';
-import { Op } from 'sequelize';
+import * as Yup from 'yup';
 
-class AmizadeController {
+class SolicitacaoAmizadeController {
     async index(req, res){
         const amizades = await Amizade.findAll({
             where: {
-                [Op.or]: [{pet_id: req.userId}, {pet2_id: req.userId}],
-                aceite: true
+                pet2_id: req.userId,
+                aceite: false
             },
             include: [
                 {
@@ -30,18 +30,40 @@ class AmizadeController {
         return res.json(amizades);
     }
 
-    async remove(req, res){
+    async store(req, res){
+        const schema = Yup.object().shape({
+            pet2_id: Yup.number().required()
+        });
+        if(!(await schema.isValid(req.body))){
+            return res.status(400).json({error: 'Id do pet é obrigatório'});
+        }
+        const amizade = {
+            pet_id: req.userId,
+            pet2_id: req.body.pet2_id
+        };
+        const { pet_id, pet2_id, aceite } = await Amizade.create(amizade);
+        return res.json({
+            pet_id,
+            pet2_id,
+            aceite
+        });
+    }
+
+
+    async update(req, res){
         const amizade = await Amizade.findByPk(req.params.id);
         if(!amizade){
             return res.status(404).json({error: `Amizade de id ${req.params.id} não encontrada`});
         }
-        if(req.userId != amizade.pet_id && req.userId != amizade.pet2_id){
-            return res.status(400).json({error: 'Você não pode desfazer amizade que não pertencem a você'});
+        if(amizade.pet2_id != req.userId){
+            return res.status(400).json({error: 'Você não alterar solicitações que não pertencem a você'});
         }
-        await amizade.destroy();
+        amizade.update({
+            aceite: true
+        })
         return res.status(204).json();
     }
 
 }
 
-export default new AmizadeController();
+export default new SolicitacaoAmizadeController();
