@@ -21,6 +21,7 @@ routes.post('/solicitacoes', authMiddleware, SolicitacaoAmizadeController.store)
 routes.put('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.update);
 routes.delete('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.remove);
 routes.get('/timeline', authMiddleware, TimelineController.index);
+routes.post('/timeline', authMiddleware, TimelineController.store);
 routes.post('/login', AuthController.store)
 
 export default routes;
