@@ -2,11 +2,29 @@ import Post from '../models/Post';
 import Pet from '../models/Pet';
 import Comentario from '../models/Comentario';
 import Like from '../models/Like';
+import Amizade from '../models/Amizade';
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 class TimelineController {
     async index(req, res){
+        const amizades = await Amizade.findAll({
+            where: {
+                [Op.or]: [{pet_id: req.userId}, {pet2_id: req.userId}],
+                aceite: true
+            },
+            attributes: ['id', 'pet_id', 'pet2_id']
+        });
+        let listSetAmizades = new Set;
+        amizades.forEach(a => {
+            listSetAmizades.add(a.pet2_id);
+            listSetAmizades.add(a.pet_id);
+        });
+        listSetAmizades.add(req.userId);
         const posts = await Post.findAll({
+            where: {
+                pet_id : Array.from(listSetAmizades)
+            },
             include: [
                 {
                     model: Pet,
