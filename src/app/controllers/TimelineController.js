@@ -21,7 +21,9 @@ class TimelineController {
             listSetAmizades.add(a.pet_id);
         });
         listSetAmizades.add(req.userId);
-        const posts = await Post.findAll({
+        const posts = await Post.findAndCountAll({
+            limit: req.query.size || 1,
+            offset: req.query.page || 0,
             where: {
                 pet_id : Array.from(listSetAmizades)
             },
@@ -51,7 +53,7 @@ class TimelineController {
                         {
                             model: Pet,
                             as: 'pet',
-                            attributes: ['id', 'firstName','lastName',]
+                            attributes: ['id', 'firstName','lastName']
                         }
                     ]
                 }
@@ -59,7 +61,6 @@ class TimelineController {
             order: [['created_at', 'DESC']],
             attributes: ['id', 'legenda', 'urlImagem', 'created_at']
         });
-
         return res.json(posts);
     }
 

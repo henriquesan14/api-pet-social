@@ -7,10 +7,14 @@ import { Op } from 'sequelize';
 
 class PetController {
     async index(req, res){
+        const nome = req.query.nome || "";
         const pets = await Pet.findAll({
             where: {
                 id: {
                     [Op.not]: req.userId
+                },
+                firstName: {
+                    [Op.like] : `%${nome}%`
                 }
             },
             attributes: ['id', 'firstName', 'lastName', 'avatar']
