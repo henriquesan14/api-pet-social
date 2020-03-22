@@ -7,6 +7,8 @@ import SolicitacaoAmizadeController from './app/controllers/SolicitacaoAmizadeCo
 import TimelineController from './app/controllers/TimelineController';
 import ComentarioController from './app/controllers/ComentarioController';
 import LikeController from './app/controllers/LikeController';
+import ConversaController from './app/controllers/ConversaController';
+import MensagemController from './app/controllers/MensagemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -30,6 +32,10 @@ routes.post('/comentarios', authMiddleware, ComentarioController.store);
 routes.delete('/comentarios/:id', authMiddleware, ComentarioController.remove);
 routes.post('/likes', authMiddleware, LikeController.store);
 routes.delete('/likes/:id', authMiddleware, LikeController.remove);
+routes.get('/conversas', authMiddleware, ConversaController.index);
+routes.delete('/conversas/:id', authMiddleware, ConversaController.remove);
+routes.get('/mensagens/:id', authMiddleware, MensagemController.index);
+routes.post('/mensagens', authMiddleware, MensagemController.store);
 routes.post('/login', AuthController.store)
 
 export default routes;
