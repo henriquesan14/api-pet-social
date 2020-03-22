@@ -9,7 +9,9 @@ class MensagemController {
         if(!conversa){
             return res.status(404).json({error: `Conversa de id ${req.params.id} não foi encontrada`});
         }
-        const mensagens = await Mensagen.findAll({
+        const mensagens = await Mensagen.findAndCountAll({
+            limit: req.query.size || 20,
+            offset: req.query.page || 0,
             where: {
                 conversa_id: conversa.id
             },

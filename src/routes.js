@@ -34,7 +34,7 @@ routes.post('/likes', authMiddleware, LikeController.store);
 routes.delete('/likes/:id', authMiddleware, LikeController.remove);
 routes.get('/conversas', authMiddleware, ConversaController.index);
 routes.delete('/conversas/:id', authMiddleware, ConversaController.remove);
-routes.get('/mensagens/:id', authMiddleware, MensagemController.index);
+routes.get('/conversas/:id/mensagens', authMiddleware, MensagemController.index);
 routes.post('/mensagens', authMiddleware, MensagemController.store);
 routes.post('/login', AuthController.store)
 
