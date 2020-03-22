@@ -1,6 +1,7 @@
 import Amizade from '../models/Amizade';
 import Pet from '../models/Pet';
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 class SolicitacaoAmizadeController {
     async index(req, res){
@@ -37,6 +38,22 @@ class SolicitacaoAmizadeController {
         });
         if(!(await schema.isValid(req.body))){
             return res.status(400).json({error: 'Id do pet é obrigatório'});
+        }
+        if(req.userId == req.body.pet2_id){
+            return res.status(400).json({error: 'Você não pode enviar solicitação para você mesmo'});
+        }
+        const checkAmizade = await Amizade.findOne({
+            where: {
+                pet_id: {
+                    [Op.or]: [req.userId, req.body.pet2_id]
+                },
+                pet2_id: {
+                    [Op.or]: [req.userId, req.body.pet2_id]
+                }
+              }
+        });
+        if(checkAmizade){
+            return res.status(400).json({error: 'Você já é amigo deste Pet ou já solicitou amizade dele'});
         }
         const amizade = {
             pet_id: req.userId,
