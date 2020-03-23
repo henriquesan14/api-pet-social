@@ -30,6 +30,10 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: true,
             },
+            sexo: {
+                type: Sequelize.STRING(1),
+                allowNull: true,
+            },
             tipo: {
                 type: Sequelize.STRING,
                 allowNull: true,

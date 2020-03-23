@@ -10,6 +10,7 @@ class Pet extends Model {
             password_hash: Sequelize.STRING,
             email: Sequelize.STRING,
             avatar: Sequelize.STRING,
+            sexo: Sequelize.STRING(1),
             tipo: Sequelize.STRING,
             raca: Sequelize.STRING,
             dataNascimento: Sequelize.DATEONLY,
