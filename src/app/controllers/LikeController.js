@@ -1,17 +1,24 @@
 import Like from '../models/Like';
-import * as Yup from 'yup';
+import Post from '../models/Post';
 
 class LikeController {
     async store(req, res){
-        const schema = Yup.object().shape({
-            post_id: Yup.number().required(),
+        const post = await Post.findByPk(req.params.idPost);
+        if(!post){
+            return res.status(404).json({error: `Post de id ${req.params.idPost} não encontrado`});
+        }
+        const like = await Like.findOne({
+            where: {
+                pet_id: req.userId,
+                post_id: post.id
+            }
         });
-        if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: 'O id do Post é obrigatório'});
+        if(like){
+            return res.status(400).json({error: 'Esse post já possui um like deste usuário'});
         }
         const {pet_id, post_id} = await Like.create({
             pet_id: req.userId,
-            post_id: req.body.post_id,
+            post_id: post.id,
         });
 
         return res.status(201).json({
@@ -21,9 +28,14 @@ class LikeController {
     }
 
     async remove(req, res){
-        const like = await Like.findByPk(req.params.id);
+        const like = await Like.findOne({
+            where: {
+                id: req.params.id,
+                post_id: req.params.idPost
+            }
+        });
         if(!like){
-            return res.status(404).json({error: `Like de id ${req.params.id} não encontrado`});
+            return res.status(404).json({error: `Like de id ${req.params.id} no Post de id ${req.params.idPost} não encontrado`});
         }
         if(like.pet_id != req.userId){
             return res.status(400).json({error: 'Like só pode ser removido pelo dono'});

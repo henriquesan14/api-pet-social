@@ -22,7 +22,8 @@ class TimelineController {
         });
         listSetAmizades.add(req.userId);
         const posts = await Post.findAndCountAll({
-            limit: req.query.size || 1,
+            distinct: true,
+            limit: req.query.size || 20,
             offset: req.query.page || 0,
             where: {
                 pet_id : Array.from(listSetAmizades)

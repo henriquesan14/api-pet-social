@@ -74,7 +74,7 @@ class SolicitacaoAmizadeController {
             return res.status(404).json({error: `Amizade de id ${req.params.id} não encontrada`});
         }
         if(amizade.pet2_id != req.userId){
-            return res.status(400).json({error: 'Você não alterar solicitações que não pertencem a você'});
+            return res.status(400).json({error: 'Você não aceitar solicitações que não pertencem a você'});
         }
         amizade.update({
             aceite: true

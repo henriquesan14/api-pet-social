@@ -6,15 +6,18 @@ import Pet from '../models/Pet';
 class ComentarioController {
     async store(req, res){
         const schema = Yup.object().shape({
-            mensagem: Yup.string().required(),
-            post_id: Yup.number().required(),
+            mensagem: Yup.string().required()
         });
         if(!(await schema.isValid(req.body))){
             return res.status(400).json({error: 'Alguns campos são obrigatórios'});
         }
+        const post = await Post.findByPk(req.params.idPost);
+        if(!post){
+            return res.status(404).json({error: `Post de id ${req.params.idPost} não encontrado`});
+        }
         const {pet_id, post_id, mensagem, created_at} = await Comentario.create({
             pet_id: req.userId,
-            post_id: req.body.post_id,
+            post_id: post.id,
             mensagem: req.body.mensagem
         });
 
@@ -27,7 +30,11 @@ class ComentarioController {
     }
 
     async remove(req, res){
-        const comentario = await Comentario.findByPk(req.params.id, {
+        const comentario = await Comentario.findOne({
+            where: {
+                id: req.params.id,
+                post_id: req.params.idPost
+            },
             include: [
                 {
                     model: Post,
@@ -44,7 +51,7 @@ class ComentarioController {
             ]
         });
         if(!comentario){
-            return res.status(404).json({error: `Comentario de id ${req.params.id} não encontrado`});
+            return res.status(404).json({error: `Comentario de id ${req.params.id} no Post de id ${req.params.idPost} não encontrado`});
         }
         if(comentario.pet_id != req.userId && comentario.post.pet.id != req.userId){
             return res.status(400).json({error: 'Comentário só pode ser removido pelo dono do comentário ou do post'});
