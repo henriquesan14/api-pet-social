@@ -14,7 +14,7 @@ class PetController {
                     [Op.not]: req.userId
                 },
                 firstName: {
-                    [Op.like] : `%${nome}%`
+                    [Op.iLike] : `%${nome}%`
                 }
             },
             attributes: ['id', 'firstName', 'lastName', 'avatar']
