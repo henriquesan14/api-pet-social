@@ -3,7 +3,8 @@ import Sequelize, { Model } from 'sequelize';
 class Amizade extends Model {
     static init(sequelize){
         super.init({
-            aceite: Sequelize.BOOLEAN
+            aceite: Sequelize.BOOLEAN,
+            amizade: Sequelize.VIRTUAL
         },
         {
             sequelize

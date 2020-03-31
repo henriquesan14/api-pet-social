@@ -1,0 +1,159 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "API Pet Social",
+      "description": "API Pet Social",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3333",
+    "basePath": "",
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/pets": {
+        "post": {
+          "tags": [
+            "Pets"
+          ],
+          "description": "Cadastra um novo pet",
+          "parameters": [
+            {
+              "name": "pet",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Pet"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Novo pet foi criado",
+              "schema": {
+                "$ref": "#/definitions/Pet"
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Pets"
+          ],
+          "parameters": [
+            {
+              "name": "nome",
+              "in": "query"
+            }
+          ],
+          "summary": "Busca todos pet (excluindo pet logado)",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Pets"
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Pets"
+          ],
+          "parameters": [
+            {
+              "name": "pet",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/PetUpdate"
+              }
+            }
+          ]
+
+        }
+      },
+      "/pets/{petId}": {
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Pets"
+          ],
+          "summary": "Busca um pet por Id",
+          "responses": {
+            "200": {
+              "schema": {
+                "$ref": "#/definitions/Pet"
+              },
+              "404": {
+                "description": "Pet não encontrado"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Pet": {
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },"lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          } 
+        }
+      },
+      "PetUpdate": {
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "oldPassword": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Pets": {
+        "type": "array",
+        "$ref": "#/definitions/Pet"
+      }
+    }
+  }

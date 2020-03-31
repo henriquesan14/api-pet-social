@@ -28,6 +28,10 @@ class AmizadeController {
             ],
             attributes: ['id', 'aceite']
         })
+        amizades.map((a) => {
+            a.amizade = req.userId != a.pet.id ? a.pet : a.pet2;
+            return a;
+        });
         return res.json(amizades);
     }
 
