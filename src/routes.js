@@ -10,32 +10,39 @@ import LikeController from './app/controllers/LikeController';
 import ConversaController from './app/controllers/ConversaController';
 import MensagemController from './app/controllers/MensagemController';
 
+import { validateCreatePet, validateUpdatePet } from './app/validators/PetValidator';
+
 import authMiddleware from './app/middlewares/auth';
 
 
 const routes = new Router();
 
-routes.get('/pets', authMiddleware, PetController.index);
-routes.get('/pets/:id', authMiddleware, PetController.getById);
-routes.post('/pets', PetController.store);
-routes.put('/pets', authMiddleware, PetController.update);
-routes.get('/amizades', authMiddleware, AmizadeController.index);
-routes.delete('/amizades/:id', authMiddleware, AmizadeController.remove);
-routes.get('/solicitacoes', authMiddleware, SolicitacaoAmizadeController.index);
-routes.post('/solicitacoes', authMiddleware, SolicitacaoAmizadeController.store);
-routes.put('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.update);
-routes.delete('/solicitacoes/:id', authMiddleware, SolicitacaoAmizadeController.remove);
-routes.get('/posts', authMiddleware, TimelineController.index);
-routes.post('/posts', authMiddleware, TimelineController.store);
-routes.delete('/posts/:id', authMiddleware, TimelineController.remove);
-routes.post('/posts/:idPost/comentarios', authMiddleware, ComentarioController.store);
-routes.delete('/posts/:idPost/comentarios/:id', authMiddleware, ComentarioController.remove);
-routes.post('/posts/:idPost/likes', authMiddleware, LikeController.store);
-routes.delete('/posts/:idPost/likes/:id', authMiddleware, LikeController.remove);
-routes.get('/conversas', authMiddleware, ConversaController.index);
-routes.delete('/conversas/:id', authMiddleware, ConversaController.remove);
-routes.get('/conversas/:id/mensagens', authMiddleware, MensagemController.index);
-routes.post('/mensagens', authMiddleware, MensagemController.store);
+//routas públicas
 routes.post('/login', AuthController.store)
+routes.post('/pets', validateCreatePet, PetController.store);
+
+
+routes.use(authMiddleware);
+routes.get('/pets', PetController.index);
+routes.get('/pets/:id', PetController.getById);
+routes.put('/pets', validateUpdatePet, PetController.update);
+routes.get('/amizades', AmizadeController.index);
+routes.delete('/amizades/:id', AmizadeController.remove);
+routes.get('/solicitacoes', SolicitacaoAmizadeController.index);
+routes.post('/solicitacoes', SolicitacaoAmizadeController.store);
+routes.put('/solicitacoes/:id', SolicitacaoAmizadeController.update);
+routes.delete('/solicitacoes/:id', SolicitacaoAmizadeController.remove);
+routes.get('/posts', TimelineController.index);
+routes.post('/posts', TimelineController.store);
+routes.delete('/posts/:id', TimelineController.remove);
+routes.post('/posts/:idPost/comentarios', ComentarioController.store);
+routes.delete('/posts/:idPost/comentarios/:id', authMiddleware, ComentarioController.remove);
+routes.post('/posts/:idPost/likes', LikeController.store);
+routes.delete('/posts/:idPost/likes/:id', LikeController.remove);
+routes.get('/conversas', ConversaController.index);
+routes.delete('/conversas/:id', ConversaController.remove);
+routes.get('/conversas/:id/mensagens', MensagemController.index);
+routes.post('/mensagens', MensagemController.store);
+
 
 export default routes;

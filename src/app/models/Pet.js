@@ -18,7 +18,15 @@ class Pet extends Model {
             estado: Sequelize.STRING,
             telefone: Sequelize.STRING,
             perfil: Sequelize.STRING,
-            ativo: Sequelize.BOOLEAN
+            ativo: Sequelize.BOOLEAN,
+            isFriend: {
+                type: Sequelize.VIRTUAL,
+                defaultValue: false
+            },
+            isSolicited: {
+                type: Sequelize.VIRTUAL,
+                defaultValue: false
+            },
         },
         {
             sequelize

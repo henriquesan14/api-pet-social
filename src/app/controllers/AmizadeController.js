@@ -1,42 +1,13 @@
-import Amizade from '../models/Amizade';
-import Pet from '../models/Pet';
-import { Op } from 'sequelize';
+import AmizadeRepository from '../repositories/AmizadeRepository';
 
 class AmizadeController {
     async index(req, res){
-        const amizades = await Amizade.findAll({
-            where: {
-                [Op.or]: [{pet_id: req.userId}, {pet2_id: req.userId}],
-                aceite: true
-            },
-            order: [['created_at', 'DESC']],
-            include: [
-                {
-                    model: Pet,
-                    as: 'pet',
-                    attributes: [
-                        'id', 'firstName', 'lastName', 'avatar'
-                    ]
-                },
-                {
-                    model: Pet,
-                    as: 'pet2',
-                    attributes: [
-                        'id', 'firstName', 'lastName', 'avatar'
-                    ]
-                }
-            ],
-            attributes: ['id', 'aceite']
-        })
-        amizades.map((a) => {
-            a.amizade = req.userId != a.pet.id ? a.pet : a.pet2;
-            return a;
-        });
+        const amizades = await AmizadeRepository.getAmizades(req.userId);
         return res.json(amizades);
     }
 
     async remove(req, res){
-        const amizade = await Amizade.findByPk(req.params.id);
+        const amizade = await AmizadeRepository.findAmizadeById(req.params.id);
         if(!amizade){
             return res.status(404).json({error: `Amizade de id ${req.params.id} não encontrada`});
         }
