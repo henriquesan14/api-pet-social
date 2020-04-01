@@ -1,21 +1,16 @@
-import Comentario from '../models/Comentario';
-import * as Yup from 'yup';
-import Post from '../models/Post';
-import Pet from '../models/Pet';
+import PostRepository from '../repositories/PostRepository';
+import ComentarioRepository from '../repositories/ComentarioRepository';
 
 class ComentarioController {
     async store(req, res){
-        const schema = Yup.object().shape({
-            mensagem: Yup.string().required()
-        });
-        if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: 'Alguns campos são obrigatórios'});
+        if(!req.body.mensagem){
+            return res.status(400).json({error: 'O campo mensagem é obrigatório'});
         }
-        const post = await Post.findByPk(req.params.idPost);
+        const post = await PostRepository.getById(req.params.idPost);
         if(!post){
             return res.status(404).json({error: `Post de id ${req.params.idPost} não encontrado`});
         }
-        const {pet_id, post_id, mensagem, created_at} = await Comentario.create({
+        const {pet_id, post_id, mensagem, created_at} = await ComentarioRepository.save({
             pet_id: req.userId,
             post_id: post.id,
             mensagem: req.body.mensagem
@@ -30,26 +25,7 @@ class ComentarioController {
     }
 
     async remove(req, res){
-        const comentario = await Comentario.findOne({
-            where: {
-                id: req.params.id,
-                post_id: req.params.idPost
-            },
-            include: [
-                {
-                    model: Post,
-                    as: 'post',
-                    attributes: ['id'],
-                    include: [
-                        {
-                            model: Pet,
-                            as: 'pet',
-                            attributes: ['id']
-                        }
-                    ]
-                }
-            ]
-        });
+        const comentario = await ComentarioRepository.getByIdAndPost(req.params.id, req.params.idPost);
         if(!comentario){
             return res.status(404).json({error: `Comentario de id ${req.params.id} no Post de id ${req.params.idPost} não encontrado`});
         }

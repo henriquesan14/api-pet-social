@@ -11,6 +11,9 @@ import ConversaController from './app/controllers/ConversaController';
 import MensagemController from './app/controllers/MensagemController';
 
 import { validateCreatePet, validateUpdatePet } from './app/validators/PetValidator';
+import validateCreatePost from './app/validators/PostValidator';
+import validateAuth from './app/validators/AuthValidator';
+import validateMessage from './app/validators/MensagemValidator';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -18,7 +21,7 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 
 //routas públicas
-routes.post('/login', AuthController.store)
+routes.post('/login', validateAuth, AuthController.store)
 routes.post('/pets', validateCreatePet, PetController.store);
 
 
@@ -33,7 +36,7 @@ routes.post('/solicitacoes', SolicitacaoAmizadeController.store);
 routes.put('/solicitacoes/:id', SolicitacaoAmizadeController.update);
 routes.delete('/solicitacoes/:id', SolicitacaoAmizadeController.remove);
 routes.get('/posts', TimelineController.index);
-routes.post('/posts', TimelineController.store);
+routes.post('/posts', validateCreatePost, TimelineController.store);
 routes.delete('/posts/:id', TimelineController.remove);
 routes.post('/posts/:idPost/comentarios', ComentarioController.store);
 routes.delete('/posts/:idPost/comentarios/:id', authMiddleware, ComentarioController.remove);
@@ -42,7 +45,7 @@ routes.delete('/posts/:idPost/likes/:id', LikeController.remove);
 routes.get('/conversas', ConversaController.index);
 routes.delete('/conversas/:id', ConversaController.remove);
 routes.get('/conversas/:id/mensagens', MensagemController.index);
-routes.post('/mensagens', MensagemController.store);
+routes.post('/mensagens', validateMessage,  MensagemController.store);
 
 
 export default routes;

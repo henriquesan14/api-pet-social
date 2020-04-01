@@ -35,6 +35,17 @@ class AmizadeRepository {
         return amizades;
     }
 
+    async getAmizadesByPet(idPet){
+        const amizades = await Amizade.findAll({
+            where: {
+                [Op.or]: [{pet_id: idPet}, {pet2_id: idPet}],
+                aceite: true
+            },
+            attributes: ['id', 'pet_id', 'pet2_id']
+        });
+        return amizades;
+    }
+
     async checkAmizade(idPet, idPetLogado){
         const checkAmizade = await Amizade.findOne({
             where: {
@@ -45,6 +56,20 @@ class AmizadeRepository {
                     [Op.or]: [idPetLogado, idPet]
                 },
                 aceite: true
+              }
+        });
+        return checkAmizade;
+    }
+
+    async checkAmizadeOrSolitacao(idPet, idPetLogado){
+        const checkAmizade = await Amizade.findOne({
+            where: {
+                pet_id: {
+                    [Op.or]: [idPetLogado, idPet]
+                },
+                pet2_id: {
+                    [Op.or]: [idPetLogado, idPet]
+                }
               }
         });
         return checkAmizade;
