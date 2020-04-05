@@ -9,6 +9,7 @@ import ComentarioController from './app/controllers/ComentarioController';
 import LikeController from './app/controllers/LikeController';
 import ConversaController from './app/controllers/ConversaController';
 import MensagemController from './app/controllers/MensagemController';
+import AvatarController from './app/controllers/AvatarController';
 
 import { validateCreatePet, validateUpdatePet } from './app/validators/PetValidator';
 import validateCreatePost from './app/validators/PostValidator';
@@ -17,6 +18,10 @@ import validateMessage from './app/validators/MensagemValidator';
 
 import authMiddleware from './app/middlewares/auth';
 
+import multer from 'multer';
+import multerConfig from './config/multer';
+
+const upload = multer(multerConfig);
 
 const routes = new Router();
 
@@ -46,6 +51,7 @@ routes.get('/conversas', ConversaController.index);
 routes.delete('/conversas/:id', ConversaController.remove);
 routes.get('/conversas/:id/mensagens', MensagemController.index);
 routes.post('/mensagens', validateMessage,  MensagemController.store);
+routes.post('/avatars', upload.single('file') , AvatarController.store)
 
 
 export default routes;

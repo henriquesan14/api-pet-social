@@ -9,7 +9,6 @@ class Pet extends Model {
             password: Sequelize.VIRTUAL,
             password_hash: Sequelize.STRING,
             email: Sequelize.STRING,
-            avatar: Sequelize.STRING,
             sexo: Sequelize.STRING(1),
             tipo: Sequelize.STRING,
             raca: Sequelize.STRING,
@@ -43,6 +42,7 @@ class Pet extends Model {
 
     static associate(models){
         this.hasMany(models.Post, {foreignKey: 'pet_id', as: 'posts'});
+        this.belongsTo(models.Avatar, {foreignKey: 'avatar_id', as: 'avatar'});
     }
 
     checkPassword(password){

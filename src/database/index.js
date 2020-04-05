@@ -7,9 +7,10 @@ import Comentario from '../app/models/Comentario';
 import Like from '../app/models/Like';
 import Conversa from '../app/models/Conversa';
 import Mensagen from '../app/models/Mensagen';
+import Avatar from '../app/models/Avatar';
 import databaseConfig from '../config/database';
 
-const models = [Pet, Amizade, Post, Comentario, Like, Conversa, Mensagen];
+const models = [Pet, Amizade, Post, Comentario, Like, Conversa, Mensagen, Avatar];
 
 class Database {
     constructor() {
