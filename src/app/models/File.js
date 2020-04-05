@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Avatar extends Model {
+class File extends Model {
     static init(sequelize){
         super.init({
             path: Sequelize.STRING
@@ -13,4 +13,4 @@ class Avatar extends Model {
     }
 }
 
-export default Avatar;
+export default File;

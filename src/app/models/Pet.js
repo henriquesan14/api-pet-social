@@ -42,7 +42,7 @@ class Pet extends Model {
 
     static associate(models){
         this.hasMany(models.Post, {foreignKey: 'pet_id', as: 'posts'});
-        this.belongsTo(models.Avatar, {foreignKey: 'avatar_id', as: 'avatar'});
+        this.belongsTo(models.File, {foreignKey: 'avatar_id', as: 'avatar'});
     }
 
     checkPassword(password){

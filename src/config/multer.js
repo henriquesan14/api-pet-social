@@ -15,7 +15,7 @@ export default {
     dest: resolve(__dirname, "..", "..", "files", "uploads"),
     storage: multerS3({
         s3: storageS3,
-        bucket: 'avatars-provider',
+        bucket: 'avatars-provider/files-pet-social',
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (req, file, cb) => {

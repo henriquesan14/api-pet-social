@@ -9,7 +9,7 @@ import ComentarioController from './app/controllers/ComentarioController';
 import LikeController from './app/controllers/LikeController';
 import ConversaController from './app/controllers/ConversaController';
 import MensagemController from './app/controllers/MensagemController';
-import AvatarController from './app/controllers/AvatarController';
+import FileController from './app/controllers/FileController';
 
 import { validateCreatePet, validateUpdatePet } from './app/validators/PetValidator';
 import validateCreatePost from './app/validators/PostValidator';
@@ -51,7 +51,7 @@ routes.get('/conversas', ConversaController.index);
 routes.delete('/conversas/:id', ConversaController.remove);
 routes.get('/conversas/:id/mensagens', MensagemController.index);
 routes.post('/mensagens', validateMessage,  MensagemController.store);
-routes.post('/avatars', upload.single('file') , AvatarController.store)
+routes.post('/files', upload.single('file') , FileController.store)
 
 
 export default routes;
