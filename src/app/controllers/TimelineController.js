@@ -15,16 +15,16 @@ class TimelineController {
     }
 
     async store(req, res){
-        const {id, legenda, urlImagem, pet_id, created_at } = await PostRepository.save({
+        const {id, legenda, image_id, pet_id, created_at } = await PostRepository.save({
             pet_id: req.userId,
             legenda: req.body.legenda,
-            urlImagem: req.body.urlImagem
+            image_id: req.body.image_id
         });
 
         return res.status(201).json({
             id,
             legenda,
-            urlImagem,
+            image_id,
             pet_id,
             created_at
         });

@@ -15,7 +15,7 @@ class MensagemRepository {
                 {
                     model: Pet,
                     as: 'pet',
-                    attributes: ['id', 'firstName', 'lastName', 'avatar']
+                    attributes: ['id', 'firstName', 'lastName']
                 }
             ],
             attributes: ['id', 'message', 'created_at']

@@ -14,12 +14,12 @@ class ConversaRepository {
                 {
                     model: Pet,
                     as: 'pet1',
-                    attributes: ['id', 'firstName', 'lastName', 'avatar']
+                    attributes: ['id', 'firstName', 'lastName']
                 },
                 {
                     model: Pet,
                     as: 'pet2',
-                    attributes: ['id', 'firstName', 'lastName', 'avatar']
+                    attributes: ['id', 'firstName', 'lastName']
                 },
             ]
         });

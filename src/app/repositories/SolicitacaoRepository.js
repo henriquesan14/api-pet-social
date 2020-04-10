@@ -25,14 +25,14 @@ class SolicitacaoRepository {
                     model: Pet,
                     as: 'pet',
                     attributes: [
-                        'id', 'firstName', 'lastName', 'avatar'
+                        'id', 'firstName', 'lastName'
                     ]
                 },
                 {
                     model: Pet,
                     as: 'pet2',
                     attributes: [
-                        'id', 'firstName', 'lastName', 'avatar'
+                        'id', 'firstName', 'lastName'
                     ]
                 }
             ],

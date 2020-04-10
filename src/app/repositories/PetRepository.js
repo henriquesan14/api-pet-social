@@ -3,6 +3,7 @@ import Post from '../models/Post';
 import Comentario from '../models/Comentario';
 import Like from '../models/Like';
 import Pet from '../models/Pet';
+import File from '../models/File';
 import AmizadeRepository from '../repositories/AmizadeRepository';
 import { Op } from 'sequelize';
 import SolicitacaoRepository from './SolicitacaoRepository';
@@ -18,7 +19,7 @@ class PetRepository {
                     [Op.iLike] : `%${nome}%`
                 }
             },
-            attributes: ['id', 'firstName', 'lastName', 'avatar']
+            attributes: ['id', 'firstName', 'lastName']
         });
         return pets;
     }
@@ -31,15 +32,20 @@ class PetRepository {
     async getPetBydIdInclude(id, idPetLogado){
         const pet = await Pet.findByPk(id, {
             attributes: [
-                'id', 'firstName', 'email', 'lastName', 'avatar',
+                'id', 'firstName', 'email', 'lastName',
                 'tipo','raca', 'dataNascimento', 'cidade', 'estado', 'telefone'
             ],
             include: [
                 {
                     model: Post,
                     as: 'posts',
-                    attributes: ['id', 'legenda', 'urlImagem', 'created_at'],
+                    attributes: ['id', 'legenda', 'created_at'],
                     include: [
+                        {
+                            model: File,
+                            as: 'image',
+                            attributes: ['id', 'path']
+                        },
                         {
                             model: Comentario,
                             as: 'comentarios',
@@ -48,7 +54,7 @@ class PetRepository {
                                 {
                                     model: Pet,
                                     as: 'pet',
-                                    attributes: ['id', 'firstName', 'lastName', 'avatar']
+                                    attributes: ['id', 'firstName', 'lastName']
                                 }
                             ]
                         },

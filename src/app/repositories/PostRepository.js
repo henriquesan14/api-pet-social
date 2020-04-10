@@ -2,6 +2,7 @@ import Post from '../models/Post';
 import Pet from '../models/Pet';
 import Comentario from '../models/Comentario'
 import Like from '../models/Like';
+import File from '../models/File';
 
 class PostRepository {
     async getPostsInclude(size, page, listIdsAmizades){
@@ -14,9 +15,14 @@ class PostRepository {
             },
             include: [
                 {
+                    model: File,
+                    as: 'image',
+                    attributes: ['id', 'path']
+                },
+                {
                     model: Pet,
                     as: 'pet',
-                    attributes: ['id', 'firstName', 'lastName', 'avatar']
+                    attributes: ['id', 'firstName', 'lastName']
                 },
                 {
                     model: Comentario,
@@ -26,7 +32,7 @@ class PostRepository {
                         {
                             model: Pet,
                             as: 'pet',
-                            attributes: ['id', 'firstName', 'lastName', 'avatar']
+                            attributes: ['id', 'firstName', 'lastName']
                         }
                     ]
                 },
@@ -44,7 +50,7 @@ class PostRepository {
                 }
             ],
             order: [['created_at', 'DESC']],
-            attributes: ['id', 'legenda', 'urlImagem', 'created_at']
+            attributes: ['id', 'legenda', 'created_at']
         });
         return posts;
     }
