@@ -20,7 +20,7 @@ export const validateUpdatePet = async (req, res, next) => {
     try{
         const schema = Yup.object().shape({
             firstName: Yup.string(),
-            email:  Yup.string().email('O campo email não é um email válido'),
+            email:  Yup.string().email('O campo email não é um email válido').required('O campo email é obrigatório'),
             oldPassword: Yup.string().min(6, 'O campo oldPassword precisa de minimo 6 caracteres'),
             password: Yup.string().min(6, 'O campo password precisa de minimo 6 caracteres')
             .when('oldPassword', (oldPassword, field) =>

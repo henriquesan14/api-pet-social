@@ -17,16 +17,10 @@ class AuthController {
             return res.status(401).json({error: 'Email/Senha inválido(s)'});
         }
 
-        const { id, firstName, perfil, avatar } = pet;
+        
         return res.json({
-            user: {
-                id,
-                firstName,
-                email,
-                perfil,
-                avatar
-            },
-            token: jwt.sign({ id}, authConfig.secret, {
+            user: pet,
+            token: jwt.sign({ id: pet.id}, authConfig.secret, {
                 expiresIn: authConfig.expiresIn
             })
         })

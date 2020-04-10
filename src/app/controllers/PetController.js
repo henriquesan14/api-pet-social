@@ -44,15 +44,9 @@ class PetController {
         if(oldPassword && !(await pet.checkPassword(oldPassword))){
             return res.status(401).json({error: 'A senha não confere com sua senha atual'})
         }
-        const {id, firstName, raca, tipo} = await pet.update(req.body);
-
-        return res.json({
-            id,
-            firstName,
-            email,
-            raca,
-            tipo
-        });
+        await pet.update(req.body);
+        const petUpdated = await PetRepository.getPetByEmail(email);
+        return res.json(petUpdated);
     }
 }
 
