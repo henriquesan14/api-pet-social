@@ -83,7 +83,14 @@ class PetRepository {
         const pet = await Pet.findOne({
             where: {
                 email: email
-            }
+            },
+            include: [
+                {
+                    model: File,
+                    as: 'avatar',
+                    attributes: ['id', 'path']
+                }
+            ]
         });
         return pet;
     }
