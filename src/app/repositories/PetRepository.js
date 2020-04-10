@@ -9,8 +9,10 @@ import { Op } from 'sequelize';
 import SolicitacaoRepository from './SolicitacaoRepository';
 
 class PetRepository {
-    async getPets(idPetLogado, nome){
-        const pets = await Pet.findAll({
+    async getPets(idPetLogado, size, page, nome){
+        const pets = await Pet.findAndCountAll({
+            limit: size || 20,
+            offset: page || 0,
             where: {
                 id: {
                     [Op.not]: idPetLogado
@@ -19,6 +21,13 @@ class PetRepository {
                     [Op.iLike] : `%${nome}%`
                 }
             },
+            include: [
+                {
+                    model: File,
+                    as: 'avatar',
+                    attributes: ['id', 'path']
+                }
+            ],
             attributes: ['id', 'firstName', 'lastName']
         });
         return pets;

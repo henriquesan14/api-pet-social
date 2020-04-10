@@ -3,7 +3,7 @@ import PetRepository from '../repositories/PetRepository';
 class PetController {
     async index(req, res){
         const nome = req.query.nome || "";
-        const pets = await PetRepository.getPets(req.userId, nome);
+        const pets = await PetRepository.getPets(req.userId, req.query.size, req.query.page, nome);
         return res.json(pets);
     }
 
