@@ -22,6 +22,13 @@ class PostRepository {
                 {
                     model: Pet,
                     as: 'pet',
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path']
+                        }
+                    ],
                     attributes: ['id', 'firstName', 'lastName']
                 },
                 {
@@ -32,6 +39,13 @@ class PostRepository {
                         {
                             model: Pet,
                             as: 'pet',
+                            include: [
+                                {
+                                    model: File,
+                                    as: 'avatar',
+                                    attributes: ['id', 'path']
+                                }
+                            ],
                             attributes: ['id', 'firstName', 'lastName']
                         }
                     ]
@@ -44,6 +58,13 @@ class PostRepository {
                         {
                             model: Pet,
                             as: 'pet',
+                            include: [
+                                {
+                                    model: File,
+                                    as: 'avatar',
+                                    attributes: ['id', 'path']
+                                }
+                            ],
                             attributes: ['id', 'firstName','lastName']
                         }
                     ]
