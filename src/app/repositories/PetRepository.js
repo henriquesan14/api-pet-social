@@ -41,7 +41,7 @@ class PetRepository {
     async getPetBydIdInclude(id, idPetLogado){
         const pet = await Pet.findByPk(id, {
             attributes: [
-                'id', 'firstName', 'email', 'lastName',
+                'id', 'firstName', 'email', 'lastName', 'sexo',
                 'tipo','raca', 'dataNascimento', 'cidade', 'estado', 'telefone'
             ],
             include: [
