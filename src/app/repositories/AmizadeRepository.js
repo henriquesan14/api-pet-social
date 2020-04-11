@@ -1,5 +1,6 @@
 import Amizade from '../models/Amizade'
 import Pet from '../models/Pet';
+import File from '../models/File';
 import { Op } from 'sequelize';
 
 class AmizadeRepository {
@@ -14,6 +15,13 @@ class AmizadeRepository {
                 {
                     model: Pet,
                     as: 'pet',
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path']
+                        }
+                    ],
                     attributes: [
                         'id', 'firstName', 'lastName'
                     ]
@@ -21,12 +29,19 @@ class AmizadeRepository {
                 {
                     model: Pet,
                     as: 'pet2',
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path']
+                        }
+                    ],
                     attributes: [
                         'id', 'firstName', 'lastName'
                     ]
                 }
             ],
-            attributes: ['id', 'aceite']
+            attributes: ['id', 'aceite','updated_at']
         });
         amizades.map((a) => {
             a.amizade = idPetLogado != a.pet.id ? a.pet : a.pet2;
