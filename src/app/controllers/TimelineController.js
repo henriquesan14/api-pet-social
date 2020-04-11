@@ -41,6 +41,11 @@ class TimelineController {
         await post.destroy();
         return res.status(204).json();
     }
+
+    async getPostsByPet(req, res){
+        const posts = await PostRepository.getPostsByPet(req.query.size, req.query.page,req.params.id);
+        return res.status(200).json(posts);
+    }
 }
 
 export default new TimelineController();

@@ -46,41 +46,10 @@ class PetRepository {
             ],
             include: [
                 {
-                    model: Post,
-                    as: 'posts',
-                    attributes: ['id', 'legenda', 'created_at'],
-                    include: [
-                        {
-                            model: File,
-                            as: 'image',
-                            attributes: ['id', 'path']
-                        },
-                        {
-                            model: Comentario,
-                            as: 'comentarios',
-                            attributes: ['id', 'mensagem', 'created_at'],
-                            include: [
-                                {
-                                    model: Pet,
-                                    as: 'pet',
-                                    attributes: ['id', 'firstName', 'lastName']
-                                }
-                            ]
-                        },
-                        {
-                            model: Like,
-                            as: 'likes',
-                            attributes: ['id'],
-                            include: [
-                                {
-                                    model: Pet,
-                                    as: 'pet',
-                                    attributes: ['id', 'firstName', 'lastName',]
-                                }
-                            ]
-                        }
-                    ]
-                },
+                    model: File,
+                    as: 'avatar',
+                    attributes: ['id', 'path']
+                }
             ]
         });
         pet.isFriend = await AmizadeRepository.checkAmizade(id, idPetLogado) != null;

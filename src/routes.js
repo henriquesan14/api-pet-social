@@ -33,6 +33,7 @@ routes.post('/pets', validateCreatePet, PetController.store);
 routes.use(authMiddleware);
 routes.get('/pets', PetController.index);
 routes.get('/pets/:id', PetController.getById);
+routes.get('/pets/:id/posts', TimelineController.getPostsByPet);
 routes.put('/pets', validateUpdatePet, PetController.update);
 routes.get('/amizades', AmizadeController.index);
 routes.delete('/amizades/:id', AmizadeController.remove);

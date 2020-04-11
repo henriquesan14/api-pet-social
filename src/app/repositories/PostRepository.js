@@ -84,6 +84,77 @@ class PostRepository {
     async save(post){
         return await Post.create(post);
     }
+
+    async getPostsByPet(size, page, idPet){
+        const posts = await Post.findAndCountAll({
+            distinct: true,
+            limit: size || 20,
+            offset: page || 0,
+            where: {
+                pet_id : idPet
+            },
+            include: [
+                {
+                    model: File,
+                    as: 'image',
+                    attributes: ['id', 'path']
+                },
+                {
+                    model: Pet,
+                    as: 'pet',
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path']
+                        }
+                    ],
+                    attributes: ['id', 'firstName', 'lastName']
+                },
+                {
+                    model: Comentario,
+                    as: 'comentarios',
+                    attributes: ['id', 'mensagem', 'created_at'],
+                    include: [
+                        {
+                            model: Pet,
+                            as: 'pet',
+                            include: [
+                                {
+                                    model: File,
+                                    as: 'avatar',
+                                    attributes: ['id', 'path']
+                                }
+                            ],
+                            attributes: ['id', 'firstName', 'lastName']
+                        }
+                    ]
+                },
+                {
+                    model: Like,
+                    as: 'likes',
+                    attributes: ['id'],
+                    include: [
+                        {
+                            model: Pet,
+                            as: 'pet',
+                            include: [
+                                {
+                                    model: File,
+                                    as: 'avatar',
+                                    attributes: ['id', 'path']
+                                }
+                            ],
+                            attributes: ['id', 'firstName','lastName']
+                        }
+                    ]
+                }
+            ],
+            order: [['created_at', 'DESC']],
+            attributes: ['id', 'legenda', 'created_at']
+        });
+        return posts;
+    }
 }
 
 export default new PostRepository();
