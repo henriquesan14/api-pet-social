@@ -1,5 +1,6 @@
 import Amizade from '../models/Amizade';
 import Pet from '../models/Pet';
+import File from '../models/File';
 
 class SolicitacaoRepository {
     async checkSolicitacao(idPet, idPetLogado){
@@ -24,6 +25,13 @@ class SolicitacaoRepository {
                 {
                     model: Pet,
                     as: 'pet',
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path']
+                        }
+                    ],
                     attributes: [
                         'id', 'firstName', 'lastName'
                     ]
