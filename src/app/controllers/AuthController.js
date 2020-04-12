@@ -17,9 +17,20 @@ class AuthController {
             return res.status(401).json({error: 'Email/Senha inválido(s)'});
         }
 
-        
+        const {id, firstName, sexo, raca, tipo, cidade, estado, telefone, avatar} = pet;
         return res.json({
-            user: pet,
+            user: {
+                id,
+                email,
+                firstName,
+                sexo,
+                raca,
+                tipo,
+                cidade,
+                estado,
+                telefone,
+                avatar
+            },
             token: jwt.sign({ id: pet.id}, authConfig.secret, {
                 expiresIn: authConfig.expiresIn
             })
