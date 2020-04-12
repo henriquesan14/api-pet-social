@@ -1,5 +1,6 @@
 import Mensagen from '../models/Mensagen';
 import Pet from '../models/Pet';
+import File from '../models/File';
 
 class MensagemRepository {
     async getMensagens(size, page, idConversa){
@@ -10,6 +11,13 @@ class MensagemRepository {
             where: {
                 conversa_id: idConversa
             },
+            include: [
+                {
+                    model: File,
+                    as: 'avatar',
+                    attributes: ['id', 'path']
+                }
+            ],
             order: [['created_at', 'DESC']],
             include: [
                 {
